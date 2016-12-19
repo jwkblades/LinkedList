@@ -8,3 +8,8 @@ EXE=LinkedList
 
 ${EXE}: main.cpp
 	${CC} ${FLAGS} -o $@ $<
+
+.Phony: clean
+
+clean:
+	@rm -f *.o ${EXE}
