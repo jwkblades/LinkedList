@@ -14,12 +14,12 @@ template<typename T> void LinkedList<T>::append(const T& item)
 {
 	if (!head)
 	{
-		head = new Node<T>(item);
+		head = new Node(item);
 		tail = head;
 	}
 	else
 	{
-		Node<T>* temp = new Node<T>(item);
+		Node* temp = new Node(item);
 		temp->previous(tail);
 		tail->next(temp);
 		tail = temp;
@@ -30,12 +30,12 @@ template<typename T> void LinkedList<T>::prepend(const T& item)
 {
 	if (!head)
 	{
-		 head = new Node<T>(item);
+		 head = new Node(item);
 		 tail = head;
 	}
 	else
 	{
-		Node<T>* temp = new Node<T>(item);
+		Node* temp = new Node(item);
 		head->previous(temp);
 		temp->next(head);
 		head = temp;
@@ -49,8 +49,8 @@ template<typename T> void LinkedList<T>::erase(const LinkedList<T>::iterator& it
 		throw "error, invalid iterator";
 	}
 
-	Node<T>* node = iter.node();
-	Node<T>* tempPrev = node->previous();
+	Node* node = iter.node();
+	Node* tempPrev = node->previous();
 	node->next()->previous(tempPrev);
 	tempPrev->next(node->next());
 	node->next(NULL);
@@ -80,7 +80,7 @@ template<typename T> typename LinkedList<T>::iterator LinkedList<T>::end(void)
 	return LinkedList<T>::iterator(NULL);
 }
 
-template<typename T> LinkedList<T>::iterator::iterator(LinkedList<T>::Node<T>* initial)
+template<typename T> LinkedList<T>::iterator::iterator(LinkedList<T>::Node* initial)
 {
 	mCursor = initial;
 	mValid = true;
@@ -91,7 +91,7 @@ template<typename T> LinkedList<T>::iterator::~iterator(void)
 	mValid = false;
 }
 
-template<typename T> LinkedList<T>::Node<T>* LinkedList<T>::iterator::node(void) const
+template<typename T> typename LinkedList<T>::Node* LinkedList<T>::iterator::node(void) const
 {
 	return mCursor;
 }
@@ -165,41 +165,41 @@ template<typename T> typename LinkedList<T>::iterator& LinkedList<T>::iterator::
 	return *this;
 }
 
-template<typename T> template<typename _T> LinkedList<T>::Node<_T>::Node(const _T& item)
+template<typename T> LinkedList<T>::Node::Node(const T& item)
 {
 	mPayload = item;
 	mNext = mPrevious = NULL;
 }
-template<typename T> template<typename _T> LinkedList<T>::Node<_T>::~Node(void)
+template<typename T> LinkedList<T>::Node::~Node(void)
 {
 	mPrevious = NULL;
 	delete mNext;
 	mNext = NULL;
 }
 
-template<typename T> template<typename _T> void LinkedList<T>::Node<_T>::next(LinkedList<T>::Node<_T>* const n)
+template<typename T>  void LinkedList<T>::Node::next(LinkedList<T>::Node* const n)
 {
 	mNext = n;
 }
-template<typename T> template<typename _T> LinkedList<T>::Node<_T>* LinkedList<T>::Node<_T>::next(void) const
+template<typename T> typename LinkedList<T>::Node* LinkedList<T>::Node::next(void) const
 {
 	return mNext;
 }
 
-template<typename T> template<typename _T> void LinkedList<T>::Node<_T>::previous(LinkedList<T>::Node<_T>* const p)
+template<typename T>  void LinkedList<T>::Node::previous(LinkedList<T>::Node* const p)
 {
 	mPrevious = p;
 }
-template<typename T> template<typename _T> LinkedList<T>::Node<_T>* LinkedList<T>::Node<_T>::previous(void) const
+template<typename T> typename LinkedList<T>::Node* LinkedList<T>::Node::previous(void) const
 {
 	return mPrevious;
 }
 
-template<typename T> template<typename _T> _T& LinkedList<T>::Node<_T>::payload(void)
+template<typename T>  T& LinkedList<T>::Node::payload(void)
 {
 	return mPayload;
 }
-template<typename T> template<typename _T> const _T& LinkedList<T>::Node<_T>::payload(void) const
+template<typename T>  const T& LinkedList<T>::Node::payload(void) const
 {
 	return mPayload;
 }

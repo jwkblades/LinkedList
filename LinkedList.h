@@ -11,7 +11,7 @@ private:
 	 * Forward declaration of the Node sub-class, since the iterator will need to
 	 * know about it.
 	 */
-	template<typename _T = T> class Node;
+	class Node;
 
 public:
 	/**
@@ -51,7 +51,7 @@ public:
 		 * @param initial The initial node for the iterator to point at. This is
 		 *     defaulted to NULL.
 		 */
-		iterator(Node<T>* initial = NULL);
+		iterator(Node* initial = NULL);
 		/**
 		 * Destructor.
 		 */
@@ -120,7 +120,7 @@ public:
 		 *
 		 * @returns The node that contains the item that the iterator is on.
 		 */
-		Node<T>* node(void) const;
+		Node* node(void) const;
 
 		/**
 		 * Determine if the iterator is valid or not.
@@ -139,7 +139,7 @@ public:
 		void invalidate(void) const;
 
 		mutable bool mValid;
-		Node<T>* mCursor;
+		Node* mCursor;
 	};
 
 	/**
@@ -166,6 +166,13 @@ public:
 	 * Retrieve an iterator at the end of the list.
 	 */
 	LinkedList<T>::iterator end(void);
+
+	/**
+	 * NOTE: const_iterators didn't get covered in the original stream. I may wind
+	 *       up doing a stream on them specifically, and how they differ from
+	 *       standard iterators in the future, but for the time being they are
+	 *       also being left as an exercise to the user.
+	 */
 	//LinkedList<T>::const_iterator begin(void) const;
 	//LinkedList<T>::const_iterator end(void) const;
 
@@ -177,7 +184,6 @@ private:
 	 * A Node class that is private to the LinkedList, since in theory nobody
 	 * outside of the list should need to know, or modify raw Nodes themselves.
 	 */
-	template<typename _T>
 	class Node
 	{
 	public:
@@ -186,7 +192,7 @@ private:
 		 *
 		 * @param item The payload the Node contains.
 		 */
-		Node(const _T& item);
+		Node(const T& item);
 		/**
 		 * Destructor. This function has the added side-effect that it removes all
 		 * Nodes further down the chain from it!
@@ -196,29 +202,29 @@ private:
 		/**
 		 * Retrieve the next Node, or set the next Node.
 		 */
-		void next(Node<_T>* const n);
-		Node<_T>* next(void) const;
+		void next(Node* const n);
+		Node* next(void) const;
 
 		/**
 		 * Retrieve the previous Node, or set the previous Node.
 		 */
-		void previous(Node<_T>* const p);
-		Node<_T>* previous(void) const;
+		void previous(Node* const p);
+		Node* previous(void) const;
 
 		/**
 		 * Retrieve the Node's payload.
 		 */
-		_T& payload(void);
-		const _T& payload(void) const;
+		T& payload(void);
+		const T& payload(void) const;
 
 	private:
-		_T mPayload;
-		Node<_T>* mPrevious;
-		Node<_T>* mNext;
+		T mPayload;
+		Node* mPrevious;
+		Node* mNext;
 	};
 
-	Node<T>* head;
-	Node<T>* tail;
+	Node* head;
+	Node* tail;
 };
 
 #include "LinkedList.ipp"
